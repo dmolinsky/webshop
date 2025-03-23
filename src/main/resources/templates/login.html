@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+</head>
+<body>
+<form th:action="@{/login}" method="post" th:object="${loginForm}">
+  <p>
+      <input type="text" th:field="*{username}" placeholder="Username">
+      <br><span th:if="${#fields.hasErrors('username')}" th:errors="*{username}" style="color:red"></span>
+  </p>
+  <p>
+      <input type="password" th:field="*{password}" placeholder="Password">
+      <br><span th:if="${#fields.hasErrors('password')}" th:errors="*{password}" style="color:red"></span>
+  </p>
+  <button type="submit">Login</button>
+  <p th:if="${error}" th:text="${error}" style="color:red"></p>
+</form>
+</body>
+</html>
