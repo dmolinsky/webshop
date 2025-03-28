@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Administrator</title>
+</head>
+<body>
+<h2>Add new product:</h2>
+<form th:action="@{/admin}" method="post" th:object="${product}" enctype="multipart/form-data">
+  <p>
+    Product Name: <input type="text" th:field="*{name}" placeholder="Enter product name">
+    <br><span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" style="color:red"></span>
+  </p>
+
+  <p>
+    Price: <input type="number" th:field="*{price}" step="0.01" placeholder="Enter product price">
+    <br><span th:if="${#fields.hasErrors('price')}" th:errors="*{price}" style="color:red"></span>
+  </p>
+
+  <p>
+    Category:
+    <select th:field="*{category}">
+      <option value="flowers">Flowers</option>
+      <option value="plants">Plants</option>
+      <option value="seeds">Seeds</option>
+      <option value="accessories">Pots</option>
+      <option value="accessories">Accessories</option>
+    </select>
+    <br><span th:if="${#fields.hasErrors('category')}" th:errors="*{category}" style="color:red"></span>
+  </p>
+
+  <p>
+    Product Image: <input type="file" name="uploadedimage" />
+    <br><span th:if="${#fields.hasErrors('image')}" th:errors="*{image}" style="color:red"></span>
+  </p>
+
+  <p><input type="submit" value="Add Product"></p>
+</form>
+
+</body>
+</html>
