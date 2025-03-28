@@ -3,6 +3,7 @@ package se.dmolinsky.webshop;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,6 +20,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @GetMapping("/login")
     String loginPage(Model model) {
@@ -42,7 +46,7 @@ public class UserController {
         }
 
         Optional<User> user = userService.getByUsername(form.getUsername());
-        if (user.isPresent() && user.get().getPassword().equals(form.getPassword())) {
+        if (user.isPresent() && passwordEncoder.matches(form.getPassword(), user.get().getPassword())) {
             session.setAttribute("user", user.get());
             return "redirect:/index";
         } else {
@@ -70,6 +74,7 @@ public class UserController {
             return "register";
 
         } else {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
             userService.add(user);
             return "register"; //ska vara nästa sida när den implementerats
         }
