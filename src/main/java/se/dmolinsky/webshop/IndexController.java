@@ -11,11 +11,6 @@ public class IndexController {
     @GetMapping("/index")
     String indexPage(HttpSession session) {
 
-        User loggedInUser = (User) session.getAttribute("user");
-
-        if (loggedInUser == null) {
-            return "redirect:/login";
-        }
         return "index";
     }
 }

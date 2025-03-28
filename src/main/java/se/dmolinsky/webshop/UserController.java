@@ -3,7 +3,6 @@ package se.dmolinsky.webshop;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -21,13 +20,13 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
     @GetMapping("/login")
-    String loginPage(Model model) {
+    String loginPage(Model model, HttpSession session) {
 
-        //OM USER ÄR LOGGED IN REDAN: return "redirect:/index"; // eller vad nästa sida heter
+        if (session.getAttribute("user") != null) {
+            return "redirect:/index";
+        }
+
         model.addAttribute("loginForm", new LoginForm());
         return "login";
     }
@@ -36,7 +35,6 @@ public class UserController {
     public String loginUser(@Valid @ModelAttribute LoginForm form, BindingResult bindingResult, Model model, HttpSession session) {
 
         if (bindingResult.hasErrors()) {
-            System.out.println("går in här");
             String messages = "";
             for (FieldError fieldError : bindingResult.getFieldErrors()) {
                 messages += fieldError.getDefaultMessage() + "*";
@@ -46,10 +44,11 @@ public class UserController {
         }
 
         Optional<User> user = userService.getByUsername(form.getUsername());
-        if (user.isPresent() && passwordEncoder.matches(form.getPassword(), user.get().getPassword())) {
+        if (user.isPresent() && userService.checkPassword(form.getPassword(), user.get().getPassword())) {
             session.setAttribute("user", user.get());
             return "redirect:/index";
         } else {
+            System.out.println(form.getPassword());
             model.addAttribute("error", "Invalid username or password");
             return "login";
         }
@@ -63,7 +62,7 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    String registerUser(Model model, @Valid User user, BindingResult bindingResult) {
+    String registerUser(Model model, @Valid User user, BindingResult bindingResult, HttpSession session) {
 
         if (bindingResult.hasErrors()) {
             String messages = "";
@@ -74,14 +73,22 @@ public class UserController {
             return "register";
 
         } else {
-            user.setPassword(passwordEncoder.encode(user.getPassword()));
+            String hashedPassword = userService.hashPassword(user.getPassword());
+            user.setPassword(hashedPassword);
+            user.setRole("USER");
             userService.add(user);
-            return "register"; //ska vara nästa sida när den implementerats
+            session.setAttribute("user", user);
+
+            return "index";
         }
 
     }
 
-
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        session.invalidate();
+        return "redirect:/login";
+    }
 
 
 }
