@@ -20,6 +20,12 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private OrderController orderController;
+
+    @Autowired
+    private OrderService orderService;
+
     @GetMapping("/login")
     String loginPage(Model model, HttpSession session) {
 
@@ -46,6 +52,9 @@ public class UserController {
         Optional<User> user = userService.getByUsername(form.getUsername());
         if (user.isPresent() && userService.checkPassword(form.getPassword(), user.get().getPassword())) {
             session.setAttribute("user", user.get());
+
+            orderController.createOrder(session, user.get());
+
             return "redirect:/index";
         } else {
             System.out.println(form.getPassword());

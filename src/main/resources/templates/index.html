@@ -5,6 +5,16 @@
     <title>Start</title>
 </head>
 <body>
-    <p>Index :)</p>
+    <h2>Search products by name:</h2>
+    <form action="#" method="get" th:action="@{/index}" th:object="${searchCriteria}">
+        <p>
+            <input type="text" th:field="*{name}" placeholder="Enter product name">
+            <button type="submit" th:attr="name='searchBtn'" value="search">Search</button>
+        </p>
+    </form>
+
+    <h2>Show products by category:</h2>
+
+
 </body>
 </html>

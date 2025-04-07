@@ -18,15 +18,16 @@ public class Product {
     private String name;
 
     @NotNull(message = "Price cannot be null")
-    @Column(precision = 10, scale = 2)
     private Double price;
 
     @Size(max = 100, message = "Category should not exceed 100 characters")
     private String category;
 
     @Lob
-    @Column(name = "image")
+    @Column(name = "image", columnDefinition = "LONGBLOB")
     private byte[] image;
+
+    private String base64Image;
 
     public Product() {}
 
@@ -36,7 +37,7 @@ public class Product {
         this.category = category;
         this.image = image;
     }
-    
+
     public Long getId() {
         return id;
     }
@@ -75,5 +76,13 @@ public class Product {
 
     public void setImage(byte[] image) {
         this.image = image;
+    }
+
+    public String getBase64Image() {
+        return base64Image;
+    }
+
+    public void setBase64Image(String base64Image) {
+        this.base64Image = base64Image;
     }
 }
