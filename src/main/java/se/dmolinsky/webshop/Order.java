@@ -45,6 +45,10 @@ public class Order {
         this.orderLines = orderLines;
     }
 
+    public void addOrderLine(OrderLine orderLine) {
+        orderLines.add(orderLine);
+    }
+
     public User getUser() {
         return user;
     }

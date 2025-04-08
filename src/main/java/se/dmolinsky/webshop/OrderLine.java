@@ -23,11 +23,11 @@ public class OrderLine {
 
     public OrderLine() {}
 
-    public OrderLine(Order order, Product product, int quantity, double price) {
+    public OrderLine(Order order, Product product, int quantity) {
         this.order = order;
         this.product = product;
         this.quantity = quantity;
-        this.price = price;
+        this.price = product.getPrice() * quantity;
     }
 
     public Long getId() {

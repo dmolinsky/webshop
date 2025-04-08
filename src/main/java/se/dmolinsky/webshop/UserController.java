@@ -87,6 +87,7 @@ public class UserController {
             user.setRole("USER");
             userService.add(user);
             session.setAttribute("user", user);
+            orderController.createOrder(session, user);
 
             return "index";
         }

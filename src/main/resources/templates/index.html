@@ -36,12 +36,13 @@
 
             <img th:if="${product.base64Image != null}" th:src="'data:image/jpeg;base64,' + ${product.base64Image}" alt="Product Image" width="200" height="200"/>
 
-            <p th:text="${product.base64Image != null ? 'Image data is present' : 'No image data'}"></p>
-
             <p th:text="'Price: ' + ${product.price}"></p>
 
             <form th:action="@{/add-to-cart}" th:method="post">
                 <input type="hidden" th:name="productId" th:value="${product.id}" />
+                <label>Quantity:</label>
+                <input type="number" th:name="quantity" min="1" value="1"/>
+                <input type="hidden" th:name="redirectTo" th:value="'search'" />
                 <button type="submit">Add to Cart</button>
             </form>
         </div>
