@@ -43,8 +43,8 @@ public class OrderService {
         return null;
     }
 
-    public List<OrderLine> getOrderLinesByOrder(Long orderId) {
-        return orderLineRepository.findByOrderId(orderId);
+    public List<OrderLine> getOrderLines(Order order) {
+        return orderLineRepository.findByOrder(order);
     }
 
 
