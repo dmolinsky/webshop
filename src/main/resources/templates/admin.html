@@ -20,11 +20,7 @@
   <p>
     Category:
     <select th:field="*{category}">
-      <option value="flowers">Flowers</option>
-      <option value="plants">Plants</option>
-      <option value="seeds">Seeds</option>
-      <option value="accessories">Pots</option>
-      <option value="accessories">Accessories</option>
+      <option th:each="category : ${categories}" th:value="${category}" th:text="${category.categoryName}"></option>
     </select>
     <br><span th:if="${#fields.hasErrors('category')}" th:errors="*{category}" style="color:red"></span>
   </p>
