@@ -26,8 +26,7 @@ public class ProductController {
         if (product.isPresent()) {
             Product p = product.get();
             if (p.getImage() != null) {
-                String base64Image = Base64.getEncoder().encodeToString(p.getImage());
-                p.setBase64Image(base64Image);
+                p.setBase64Image();
             }
             model.addAttribute("product", p);
         } else {

@@ -5,6 +5,8 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
+import java.util.Base64;
+
 @Entity
 @Table(name = "products")
 public class Product {
@@ -76,13 +78,15 @@ public class Product {
 
     public void setImage(byte[] image) {
         this.image = image;
+        setBase64Image();
     }
 
     public String getBase64Image() {
         return base64Image;
     }
 
-    public void setBase64Image(String base64Image) {
-        this.base64Image = base64Image;
+    public void setBase64Image() {
+        this.base64Image = (image != null) ? Base64.getEncoder().encodeToString(image) : null;
     }
+
 }
