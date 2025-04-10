@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Order successful</title>
+</head>
+<body>
+
+<p>Thank you for your order!</p>
+
+<h3>Order Details:</h3>
+
+<table>
+    <thead>
+    <tr>
+        <th>Product Name</th>
+        <th>Price</th>
+        <th>Quantity</th>
+        <th>Total Price</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="orderLine : ${order.orderLines}">
+        <td th:text="${orderLine.product.name}"></td>
+        <td th:text="${orderLine.product.price}"></td>
+        <td th:text="${orderLine.quantity}"></td>
+        <td th:text="${orderLine.getPrice()}"></td>
+    </tbody>
+</table>
+
+
+
+
+</body>
+</html>

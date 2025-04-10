@@ -3,7 +3,6 @@ package se.dmolinsky.webshop;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,9 +19,8 @@ public class OrderService {
     private ProductRepository productRepository;
 
     public Order createOrder(User user) {
-        List<OrderLine> orderLines = new ArrayList<>();
-        Order order = new Order(orderLines, user);
-        return orderRepository.save(order);
+        Order order = new Order(user);
+        return order;
     }
 
     public Order saveOrder(Order order) {
@@ -58,5 +56,9 @@ public class OrderService {
 
     public void deleteOrderLine(Long orderLineId) {
         orderLineRepository.deleteById(orderLineId);
+    }
+
+    public Optional<Order> getOrderById(Long orderId) {
+        return orderRepository.findById(orderId);
     }
 }

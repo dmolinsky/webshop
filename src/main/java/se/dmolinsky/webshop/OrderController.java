@@ -49,7 +49,6 @@ public class OrderController {
                             @RequestParam("redirectTo") String redirectTo,
                             @RequestParam("quantity") Long quantity,
                             HttpSession session) {
-
         User user = (User) session.getAttribute("user");
 
         if (user == null) {
@@ -91,5 +90,80 @@ public class OrderController {
             return "redirect:/index";
         }
     }
+
+    @PostMapping("/update-product-quantity")
+    public String updateProductQuantity(@RequestParam("productId") Long productId,
+                                        @RequestParam("quantity") int quantity,
+                                        HttpSession session) {
+        Order order = (Order) session.getAttribute("order");
+
+        for (OrderLine orderLine : order.getOrderLines()) {
+            if (orderLine.getProduct().getId().equals(productId)) {
+                orderLine.setQuantity(quantity);
+
+                break;
+            }
+        }
+
+        session.setAttribute("order", order);
+        return "redirect:/cart";
+    }
+
+    @PostMapping("/remove-product-from-cart")
+    public String removeProductFromCart(@RequestParam("productId") Long productId, HttpSession session) {
+        Order order = (Order) session.getAttribute("order");
+
+        order.removeOrderLineByProductId(productId);
+
+        session.setAttribute("order", order);
+
+        return "redirect:/cart";
+    }
+
+    @PostMapping("/checkout")
+    public String checkout(HttpSession session, Model model) {
+        User user = (User) session.getAttribute("user");
+
+        if (user == null) {
+            return "redirect:/login";
+        }
+
+        Order order = (Order) session.getAttribute("order");
+
+        try {
+            order.setStatus(OrderStatus.PENDING);
+            orderService.saveOrder(order);
+
+            session.removeAttribute("order");
+            session.setAttribute("order", new Order(user));
+
+            return "redirect:/order-successful?orderId=" + order.getId();
+        } catch (Exception e) {
+            return "redirect:/order-unsuccessful";
+        }
+
+    }
+
+    @GetMapping("/order-successful")
+    public String orderSuccessful(@RequestParam("orderId") Long orderId,
+                                  HttpSession session,
+                                  Model model) {
+        if (session.getAttribute("user") == null) {
+            return "redirect:/login";
+        }
+
+        Optional<Order> orderOpt = orderService.getOrderById(orderId);
+
+        if (orderOpt.isPresent()) {
+            Order order = orderOpt.get();
+            model.addAttribute("order", order);
+            return "order-successful";
+        } else {
+            return "order-unsuccessful"; //not necessarily true but page is used anyway
+        }
+
+    }
+
+
 
 }

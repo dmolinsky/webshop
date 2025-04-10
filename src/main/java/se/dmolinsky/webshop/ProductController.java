@@ -75,4 +75,7 @@ public class ProductController {
         productService.addProduct(product);
         return "redirect:/index";
     }
+
+
+
 }

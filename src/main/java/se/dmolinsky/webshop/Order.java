@@ -1,6 +1,8 @@
 package se.dmolinsky.webshop;
 
 import jakarta.persistence.*;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -23,8 +25,8 @@ public class Order {
 
     public Order() {}
 
-    public Order(List<OrderLine> orderLines, User user) {
-        this.orderLines = orderLines;
+    public Order(User user) {
+        this.orderLines = new ArrayList<OrderLine>();
         this.user = user;
         this.status = OrderStatus.PENDING;
     }
@@ -48,6 +50,12 @@ public class Order {
     public void addOrderLine(OrderLine orderLine) {
         orderLines.add(orderLine);
     }
+
+    public void removeOrderLineByProductId(Long productId) {
+        orderLines.removeIf(orderLine -> orderLine.getProduct().getId().equals(productId));
+    }
+
+
 
     public User getUser() {
         return user;
