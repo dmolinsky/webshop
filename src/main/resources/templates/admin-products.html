@@ -5,6 +5,9 @@
     <title>Administrate products</title>
 </head>
 <body>
+<!-- Header -->
+<div th:replace="fragments/header :: header"></div>
+
 <h2>Add new product:</h2>
 <form th:action="@{/admin-add-products}" method="post" th:object="${product}" enctype="multipart/form-data">
   <p>

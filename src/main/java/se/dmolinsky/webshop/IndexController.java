@@ -20,10 +20,12 @@ public class IndexController {
 
     @GetMapping("/index")
     public String indexPage(HttpSession session, Model model) {
+        User user = (User) session.getAttribute("user");
 
         if (session.getAttribute("user") == null) {
             return "redirect:/login";
         }
+        model.addAttribute("user", user);
 
         model.addAttribute("categories", Category.values());
         model.addAttribute("searchCriteria", new SearchCriteria());
@@ -33,7 +35,13 @@ public class IndexController {
     }
 
     @PostMapping("/index")
-    public String searchProducts(@ModelAttribute SearchCriteria searchCriteria, Model model) {
+    public String searchProducts(@ModelAttribute SearchCriteria searchCriteria, HttpSession session, Model model) {
+        User user = (User) session.getAttribute("user");
+
+        if (session.getAttribute("user") == null) {
+            return "redirect:/login";
+        }
+        model.addAttribute("user", user);
 
         model.addAttribute("products", new ArrayList<Product>());
 

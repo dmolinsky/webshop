@@ -6,6 +6,9 @@
 </head>
 <body>
 <h1>Register</h1>
+<!-- Header -->
+<div th:replace="fragments/header :: header"></div>
+
 <form th:action="@{/register}" method="post" th:object="${user}">
     <p>
         Username: <input type="text" th:field="*{username}">

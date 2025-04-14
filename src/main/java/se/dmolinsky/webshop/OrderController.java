@@ -31,9 +31,11 @@ public class OrderController {
     @GetMapping("/cart")
     public String cartPage(HttpSession session, Model model) {
 
-        if (session.getAttribute("user") == null) {
+        User user = (User) session.getAttribute("user");
+        if (user == null) {
             return "redirect:/login";
         }
+        model.addAttribute("user", user);
 
         Order order = (Order) session.getAttribute("order");
 
@@ -123,10 +125,10 @@ public class OrderController {
     @PostMapping("/checkout")
     public String checkout(HttpSession session, Model model) {
         User user = (User) session.getAttribute("user");
-
         if (user == null) {
             return "redirect:/login";
         }
+        model.addAttribute("user", user);
 
         Order order = (Order) session.getAttribute("order");
 
@@ -148,9 +150,12 @@ public class OrderController {
     public String orderSuccessful(@RequestParam("orderId") Long orderId,
                                   HttpSession session,
                                   Model model) {
-        if (session.getAttribute("user") == null) {
+
+        User user = (User) session.getAttribute("user");
+        if (user == null) {
             return "redirect:/login";
         }
+        model.addAttribute("user", user);
 
         Optional<Order> orderOpt = orderService.getOrderById(orderId);
 
@@ -165,7 +170,18 @@ public class OrderController {
     }
 
     @GetMapping("/admin-orders")
-    public String showAllOrders(Model model) {
+    public String showAllOrders(HttpSession session, Model model) {
+
+        User user = (User) session.getAttribute("user");
+        if (user == null) {
+            return "redirect:/login";
+        }
+        if (!user.getRole().equals("ADMIN")) {
+            return "redirect:/index";
+        }
+
+        model.addAttribute("user", user);
+
 
         List<Order> orders = orderService.getAllOrders();
 

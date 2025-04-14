@@ -5,6 +5,9 @@
     <title>Title</title>
 </head>
 <body>
+<!-- Header -->
+<div th:replace="fragments/header :: header"></div>
+
 <h1>Shopping cart:</h1>
 <table>
     <thead>
@@ -38,7 +41,7 @@
     </tbody>
 </table>
 
-<form th:action="@{/checkout}" method="post" th:if="${#lists.isNotEmpty(orderLines)}">
+<form th:action="@{/checkout}" method="post" th:if="${orderLines != null and #lists.size(orderLines) > 0}">
     <button type="submit">Place Order</button>
 </form>
 

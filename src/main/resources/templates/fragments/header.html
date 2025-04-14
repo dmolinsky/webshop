@@ -1,0 +1,18 @@
+<div th:fragment="header">
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/index">Home</a></li>
+
+                <li th:if="${user != null and user.role == 'ADMIN'}"><a href="/admin-orders">Admin orders</a></li>
+                <li th:if="${user != null and user.role == 'ADMIN'}"><a href="/admin-products">Admin products</a></li>
+
+                <li th:if="${user != null}"><a href="/cart">Shopping Cart</a></li>
+
+                <li th:if="${user != null}"><a href="/logout">Logout</a></li>
+
+                <li th:if="${user == null}"><a href="/login">Login</a></li>
+            </ul>
+        </nav>
+    </header>
+</div>

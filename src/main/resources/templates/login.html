@@ -5,6 +5,9 @@
     <title>Login</title>
 </head>
 <body>
+<!-- Header -->
+<div th:replace="fragments/header :: header"></div>
+
 <form th:action="@{/login}" method="post" th:object="${loginForm}">
   <p>
       <input type="text" th:field="*{username}" placeholder="Username">

@@ -19,7 +19,13 @@ public class ProductController {
     private ProductService productService;
 
     @GetMapping("/product/{id}")
-    public String showProductPage(@PathVariable("id") Long id, Model model) {
+    public String showProductPage(@PathVariable("id") Long id, HttpSession session, Model model) {
+        User user = (User) session.getAttribute("user");
+        if (user == null) {
+            return "redirect:/login";
+        }
+        model.addAttribute("user", user);
+
         Optional<Product> product = productService.getProductById(id);
 
         if (product.isPresent()) {
@@ -39,9 +45,14 @@ public class ProductController {
     public String showAdminPage(HttpSession session, Model model) {
         User user = (User) session.getAttribute("user");
 
-        if (user == null || !user.getRole().equals("ADMIN")) {
+        if (user == null) {
             return "redirect:/login";
         }
+        if (!user.getRole().equals("ADMIN")) {
+            return "redirect:/index";
+        }
+        model.addAttribute("user", user);
+
 
         model.addAttribute("product", new Product());
         model.addAttribute("categories", Category.values());
@@ -78,7 +89,5 @@ public class ProductController {
         productService.addProduct(product);
         return "redirect:/index";
     }
-
-
 
 }

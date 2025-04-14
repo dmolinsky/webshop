@@ -29,9 +29,11 @@ public class UserController {
     @GetMapping("/login")
     String loginPage(Model model, HttpSession session) {
 
-        if (session.getAttribute("user") != null) {
+        User user = (User) session.getAttribute("user");
+        if (user != null) {
             return "redirect:/index";
         }
+        model.addAttribute("user", user);
 
         model.addAttribute("loginForm", new LoginForm());
         return "login";
