@@ -14,7 +14,7 @@ public class Order {
     private Long id;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<OrderLine> orderLines;
+    private List<OrderLine> orderLines = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
