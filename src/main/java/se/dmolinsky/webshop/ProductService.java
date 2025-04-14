@@ -40,4 +40,8 @@ public class ProductService {
         return products.isEmpty() ? Optional.empty() : Optional.of(products);
     }
 
+    public List<Product> getAllProducts() {
+        return productRepository.findAll();
+    }
+
 }

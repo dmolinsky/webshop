@@ -35,7 +35,7 @@ public class ProductController {
     }
 
 
-    @GetMapping("/admin")
+    @GetMapping("/admin-products")
     public String showAdminPage(HttpSession session, Model model) {
         User user = (User) session.getAttribute("user");
 
@@ -44,10 +44,13 @@ public class ProductController {
         }
 
         model.addAttribute("product", new Product());
-        return "admin";
+        model.addAttribute("categories", Category.values());
+        model.addAttribute("products", productService.getAllProducts());
+
+        return "admin-products";
     }
 
-    @PostMapping("/admin")
+    @PostMapping("/admin-products")
     public String addProduct(@Valid @ModelAttribute("product") Product product,
                              BindingResult result,
                              Model model,
@@ -56,12 +59,12 @@ public class ProductController {
         if (result.hasErrors()) {
             result.getAllErrors().forEach(error -> System.out.println("Error: " + error.getDefaultMessage()));
 
-            return "admin";
+            return "admin-products";
         }
 
         if (imageFile.isEmpty()) {
             model.addAttribute("error", "No image file selected");
-            return "admin";
+            return "admin-products";
         }
 
         try {
@@ -69,7 +72,7 @@ public class ProductController {
             product.setImage(imageBytes);
         } catch (IOException e) {
             model.addAttribute("error", "Error while uploading the image.");
-            return "admin";
+            return "admin-products";
         }
 
         productService.addProduct(product);
