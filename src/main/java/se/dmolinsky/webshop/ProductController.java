@@ -50,7 +50,7 @@ public class ProductController {
         return "admin-products";
     }
 
-    @PostMapping("/admin-products")
+    @PostMapping("/admin-add-products")
     public String addProduct(@Valid @ModelAttribute("product") Product product,
                              BindingResult result,
                              Model model,
