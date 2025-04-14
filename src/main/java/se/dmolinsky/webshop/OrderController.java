@@ -164,6 +164,31 @@ public class OrderController {
 
     }
 
+    @GetMapping("/admin-orders")
+    public String showAllOrders(Model model) {
+
+        List<Order> orders = orderService.getAllOrders();
+
+        model.addAttribute("orders", orders);
+        model.addAttribute("orderStatuses", OrderStatus.values());
+
+        return "admin-orders";
+    }
+
+    @PostMapping("/admin-update-order")
+    public String updateOrderStatus(@RequestParam("orderId") Long orderId,
+                                    @RequestParam("status") OrderStatus status) {
+        Optional<Order> orderOpt = orderService.getOrderById(orderId);
+
+        if (orderOpt.isPresent()) {
+            Order order = orderOpt.get();
+            order.setStatus(status);
+            orderService.saveOrder(order);
+        }
+
+        return "redirect:/admin-orders";
+    }
+
 
 
 }
