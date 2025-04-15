@@ -29,6 +29,8 @@ public class Product {
     @Column(name = "image", columnDefinition = "LONGBLOB")
     private byte[] image;
 
+    @Lob
+    @Column(name = "base64image", columnDefinition = "LONGTEXT")
     private String base64Image;
 
     public Product() {}

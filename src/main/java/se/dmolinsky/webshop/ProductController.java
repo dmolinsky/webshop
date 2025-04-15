@@ -87,7 +87,7 @@ public class ProductController {
         }
 
         productService.addProduct(product);
-        return "redirect:/index";
+        return "redirect:/admin-products";
     }
 
 }
