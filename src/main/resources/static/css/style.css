@@ -810,3 +810,102 @@ body {
         width: 100%;
     }
 }
+
+/*** ORDER SUCCESS ***/
+.order-success-container {
+    max-width: 900px;
+    margin: 3rem auto;
+    padding: 2rem;
+    background-color: var(--white);
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    color: var(--dark-green);
+}
+
+.order-success-container h3 {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+    color: var(--dark-green);
+}
+
+.order-success-container table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1.5rem;
+}
+
+.order-success-container thead {
+    background-color: var(--light-green);
+}
+
+.order-success-container th,
+.order-success-container td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    color: var(--dark-green);
+}
+
+@media (max-width: 768px) {
+    .order-success-container table,
+    .order-success-container thead,
+    .order-success-container tbody,
+    .order-success-container th,
+    .order-success-container td,
+    .order-success-container tr {
+        display: block;
+        width: 100%;
+    }
+
+    .order-success-container thead {
+        display: none;
+    }
+
+    .order-success-container td {
+        padding: 0.75rem 0;
+        border-bottom: 1px solid #eee;
+    }
+
+    .order-success-container td::before {
+        content: attr(data-label);
+        font-weight: bold;
+        display: block;
+        margin-bottom: 0.25rem;
+        color: var(--gray);
+    }
+}
+
+/*** ORDER UNSUCCESSFUL ***/
+.order-unsuccessful-container {
+    max-width: 600px;
+    margin: 3rem auto;
+    padding: 2rem;
+    background-color: var(--white);
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    color: var(--dark-green);
+}
+
+.order-unsuccessful-container p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+}
+
+.order-unsuccessful-container a {
+    display: inline-block;
+    margin-top: 1rem;
+    text-decoration: none;
+    padding: 0.75rem 1.5rem;
+    background-color: var(--dark-green);
+    color: var(--white);
+    border-radius: 6px;
+    transition: background-color 0.3s;
+}
+
+.order-unsuccessful-container a:hover {
+    background-color: var(--light-green);
+    color: var(--dark-green);
+}

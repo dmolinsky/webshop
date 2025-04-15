@@ -10,29 +10,29 @@
 <!-- Header -->
 <div th:replace="fragments/header :: header"></div>
 
-<p>Thank you for your order!</p>
+<div class="order-success-container">
+    <p>Thank you for your order!</p>
 
-<h3>Order Details:</h3>
+    <h3>Order Details:</h3>
 
-<table>
-    <thead>
-    <tr>
-        <th>Product Name</th>
-        <th>Price</th>
-        <th>Quantity</th>
-        <th>Total Price</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="orderLine : ${order.orderLines}">
-        <td th:text="${orderLine.product.name}"></td>
-        <td th:text="${orderLine.product.price}"></td>
-        <td th:text="${orderLine.quantity}"></td>
-        <td th:text="${orderLine.getPrice()}"></td>
-    </tbody>
-</table>
-
-
+    <table>
+        <thead>
+        <tr>
+            <th>Product Name</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Total Price</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="orderLine : ${order.orderLines}">
+            <td th:text="${orderLine.product.name}"></td>
+            <td th:text="${orderLine.product.price}"></td>
+            <td th:text="${orderLine.quantity}"></td>
+            <td th:text="${orderLine.getPrice()}"></td>
+        </tbody>
+    </table>
+</div>
 
 
 </body>
