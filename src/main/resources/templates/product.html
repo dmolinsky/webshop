@@ -16,7 +16,7 @@
 
     <div class="product-details">
         <p><strong>Category:</strong> <span th:text="${product.category}">Category</span></p>
-        <p><strong>Price:</strong> $<span th:text="${product.price}">Price</span></p>
+        <p><strong>Price:</strong> <span th:text="${product.price}">Price</span> kr</p>
     </div>
 
     <img class="product-image" th:if="${product.base64Image != null}" th:src="'data:image/jpeg;base64,' + ${product.base64Image}" alt="Product Image" />
