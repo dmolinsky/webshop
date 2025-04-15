@@ -17,6 +17,7 @@ body {
     color: var(--dark-green);
 }
 
+/*** HEADER ***/
 .site-header {
     background: linear-gradient(to right, var(--dark-green), #365f3c);
     padding: 1rem 2rem;
@@ -130,6 +131,7 @@ body {
     }
 }
 
+/*** LOGIN AND REGISTER ***/
 .form-container {
     max-width: 400px;
     margin: 3rem auto;
@@ -196,4 +198,249 @@ body {
     color: red;
     margin-bottom: 1rem;
     display: block;
+}
+
+::placeholder {
+    color: var(--dark-green);
+    opacity: 1; /* för säkerhet i moderna browsers */
+}
+
+
+/*** CONTENT PAGES ***/
+
+.content-container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 1rem;
+}
+
+.content-container h2 {
+    color: var(--dark-green);
+    margin: 2rem 0 1rem;
+    text-align: center;
+}
+
+.content-container form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 2rem;
+    gap: 1rem;
+}
+
+.search-group {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.search-group form {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
+    flex: 1 1 0;
+    min-width: 0;
+}
+
+.search-group input[type="text"],
+.search-group select {
+    max-width: 200px;
+}
+
+.search-group button[type="submit"] {
+    white-space: nowrap;
+}
+
+.content-container input[type="text"],
+.content-container select,
+.content-container input[type="number"] {
+    color: var(--dark-green);
+    padding: 0.75rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    width: 100%;
+    max-width: 300px;
+    box-sizing: border-box;
+    display: block;
+}
+
+.content-container button[type="submit"] {
+    padding: 0.75rem 1.5rem;
+    background-color: var(--dark-green);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.content-container button[type="submit"]:hover {
+    background-color: var(--light-green);
+    color: var(--dark-green);
+}
+
+.content-container p {
+    text-align: center;
+    color: var(--dark-green);
+    margin: 1rem 0;
+}
+
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.product-card {
+    margin: 1rem auto;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    padding: 0.75rem;
+    background-color: transparent;
+    box-shadow: none;
+}
+
+.product-card img {
+    width: 100%;
+    height: auto;
+    border-radius: 6px;
+    margin-bottom: 1rem;
+}
+
+.product-card a {
+    font-size: 1.2rem;
+    color: var(--dark-green);
+    font-weight: bold;
+    text-decoration: none;
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.product-card p {
+    color: var(--gray);
+    margin-bottom: 1rem;
+}
+
+.product-card form {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    margin-bottom: 0;
+    width: 100%;
+}
+
+.add-to-cart-row {
+    margin-top: auto;
+    width: 100%;
+}
+
+.add-to-cart-form {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    width: 100%;
+    margin-bottom: 0;
+}
+
+.quantity-input {
+    flex: 1;
+    min-width: 60px;
+}
+
+.add-button {
+    flex: 1;
+    min-width: 100px;
+}
+
+@media (max-width: 768px) {
+    .content-container {
+        padding: 1rem;
+    }
+
+    .content-container form {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 1rem;
+    }
+
+    .content-container input[type="text"],
+    .content-container select,
+    .content-container input[type="number"] {
+        max-width: 768px;
+    }
+
+    .search-group {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .search-group form {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .search-group input[type="text"],
+    .search-group select,
+    .search-group button[type="submit"] {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 0.75rem;
+        font-size: 1rem;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+    }
+
+    .search-group button[type="submit"] {
+        box-sizing: border-box;
+    }
+
+    .product-card {
+        margin: 1rem 0;
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .product-card img {
+        width: 100%;
+        height: auto;
+    }
+
+    .product-card form {
+        width: 100%;
+    }
+
+    .add-to-cart-form {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        width: 100%;
+    }
+
+    .add-to-cart-form label {
+        flex: 0 1 auto;
+        margin-right: 0.5rem;
+    }
+
+    .quantity-input {
+        flex: 1 1 auto;
+        min-width: 120px;
+    }
+
+    .add-button {
+        flex: 1 1 100%;
+    }
 }
