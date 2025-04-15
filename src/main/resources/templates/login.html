@@ -10,23 +10,25 @@
 <!-- Header -->
 <div th:replace="fragments/header :: header"></div>
 
-<form th:action="@{/login}" method="post" th:object="${loginForm}">
-  <p>
-      <label>
-          <input type="text" th:field="*{username}" placeholder="Username">
-      </label>
-      <br><span th:if="${#fields.hasErrors('username')}" th:errors="*{username}" style="color:red"></span>
-  </p>
-  <p>
-      <label>
-          <input type="password" th:field="*{password}" placeholder="Password">
-      </label>
-      <br><span th:if="${#fields.hasErrors('password')}" th:errors="*{password}" style="color:red"></span>
-  </p>
-  <button type="submit">Login</button>
-  <p th:if="${error}" th:text="${error}" style="color:red"></p>
-</form>
-<p>First time here? <a href="/register">Register!</a></p>
-
+<div class="form-container">
+    <h1>Welcome!</h1>
+    <form th:action="@{/login}" method="post" th:object="${loginForm}">
+      <p>
+          <label>
+              <input type="text" th:field="*{username}" placeholder="Username">
+          </label>
+          <br><span th:if="${#fields.hasErrors('username')}" th:errors="*{username}" style="color:red"></span>
+      </p>
+      <p>
+          <label>
+              <input type="password" th:field="*{password}" placeholder="Password">
+          </label>
+          <br><span th:if="${#fields.hasErrors('password')}" th:errors="*{password}" style="color:red"></span>
+      </p>
+      <button type="submit">Login</button>
+      <p th:if="${error}" th:text="${error}" style="color:red"></p>
+    </form>
+    <p>First time here? <a href="/register">Register!</a></p>
+</div>
 </body>
 </html>
