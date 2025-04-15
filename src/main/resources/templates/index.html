@@ -37,7 +37,6 @@
 
             <img th:if="${product.base64Image != null}" th:src="'data:image/jpeg;base64,' + ${product.base64Image}" alt="Product Image"/>
 
-
             <div class="add-to-cart-row">
                 <form th:action="@{/add-to-cart}" th:method="post" class="add-to-cart-form">
                     <input type="hidden" th:name="productId" th:value="${product.id}" />

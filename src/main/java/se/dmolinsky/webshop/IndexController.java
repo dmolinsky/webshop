@@ -29,7 +29,9 @@ public class IndexController {
 
         model.addAttribute("categories", Category.values());
         model.addAttribute("searchCriteria", new SearchCriteria());
-        model.addAttribute("products", new ArrayList<>());
+
+        List<Product> allProducts = productService.getAllProducts();
+        model.addAttribute("products", allProducts);
 
         return "index";
     }
