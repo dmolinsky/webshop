@@ -20,6 +20,9 @@ public class OrderController {
     @Autowired
     private ProductService productService;
 
+    @Autowired
+    private EmailService emailService;
+
     @GetMapping("/createOrder")
     public void createOrder(HttpSession session, User user) {
         if (session.getAttribute("order") == null) {
@@ -135,6 +138,10 @@ public class OrderController {
         try {
             order.setStatus(OrderStatus.PENDING);
             orderService.saveOrder(order);
+
+            String email = order.getUser().getEmail();
+            String orderDetails = "Ordernummer: " + order.getId() + ": \n" + order.getFormattedProductList() + "\n" + "Total: " + order.getTotalAmount() + "kr";
+            emailService.sendOrderConfirmation(email, orderDetails);
 
             session.removeAttribute("order");
             session.setAttribute("order", new Order(user));

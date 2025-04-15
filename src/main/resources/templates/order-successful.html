@@ -11,9 +11,7 @@
 <div th:replace="fragments/header :: header"></div>
 
 <div class="order-success-container">
-    <p>Thank you for your order!</p>
-
-    <h3>Order Details:</h3>
+    <h3>Thank you for your order!</h3>
 
     <table>
         <thead>
@@ -32,6 +30,7 @@
             <td th:text="${orderLine.getPrice()}"></td>
         </tbody>
     </table>
+    <h3 th:text="'Total is ' + ${order.totalAmount} + ' kr'"></h3>
 </div>
 
 

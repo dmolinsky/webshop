@@ -56,7 +56,6 @@ public class Order {
     }
 
 
-
     public User getUser() {
         return user;
     }
@@ -71,5 +70,29 @@ public class Order {
 
     public void setStatus(OrderStatus status) {
         this.status = status;
+    }
+
+    public double getTotalAmount() {
+        double total = 0.0;
+        for (OrderLine line : this.getOrderLines()) {
+            Product product = line.getProduct();
+            int quantity = line.getQuantity();
+            total += product.getPrice() * quantity;
+        }
+        return total;
+    }
+
+    public String getFormattedProductList() {
+        StringBuilder productList = new StringBuilder();
+        for (OrderLine line : this.getOrderLines()) {
+            Product product = line.getProduct();
+            int quantity = line.getQuantity();
+            productList.append("- ")
+                    .append(product.getName())
+                    .append(" (")
+                    .append(quantity)
+                    .append(" st)\n");
+        }
+        return productList.toString();
     }
 }
