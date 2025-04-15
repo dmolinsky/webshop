@@ -65,17 +65,25 @@ public class UserController {
         }
     }
 
-
     @GetMapping("/register")
-    String registerUserPage(Model model) {
-        model.addAttribute("user", new User());
+    String registerUserPage(Model model, HttpSession session) {
+
+        User sessionUser = (User) session.getAttribute("user");
+        if (sessionUser != null) {
+            return "redirect:/logout";
+        }
+        model.addAttribute("user", sessionUser);
+
+        model.addAttribute("registerForm", new User());
+
         return "register";
     }
 
     @PostMapping("/register")
-    String registerUser(Model model, @Valid User user, BindingResult bindingResult, HttpSession session) {
+    String registerUser(Model model, @Valid @ModelAttribute("registerForm") User user, BindingResult bindingResult, HttpSession session) {
 
         if (bindingResult.hasErrors()) {
+            model.addAttribute("user", null);
             String messages = "";
             for (FieldError fieldError : bindingResult.getFieldErrors()) {
                 messages += fieldError.getDefaultMessage() +"*";
