@@ -10,49 +10,50 @@
 <!-- Header -->
 <div th:replace="fragments/header :: header"></div>
 
-<h2>Add new product:</h2>
-<form th:action="@{/admin-add-products}" method="post" th:object="${product}" enctype="multipart/form-data">
-  <p>
-    Product Name: <input type="text" th:field="*{name}" placeholder="Enter product name">
-    <br><span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" style="color:red"></span>
-  </p>
-  <p>
-    Price: <input type="number" th:field="*{price}" step="0.01" placeholder="Enter product price">
-    <br><span th:if="${#fields.hasErrors('price')}" th:errors="*{price}" style="color:red"></span>
-  </p>
-  <p>
-    Category:
-    <select th:field="*{category}">
-      <option th:each="category : ${categories}" th:value="${category}" th:text="${category.categoryName}"></option>
-    </select>
-    <br><span th:if="${#fields.hasErrors('category')}" th:errors="*{category}" style="color:red"></span>
-  </p>
+<div class="admin-products-container">
+  <h2>Add new product:</h2>
+  <form th:action="@{/admin-add-products}" method="post" th:object="${product}" enctype="multipart/form-data">
+    <p>
+      Product Name: <input type="text" th:field="*{name}" placeholder="Enter product name">
+      <br><span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" style="color:red"></span>
+    </p>
+    <p>
+      Price: <input type="number" th:field="*{price}" step="0.01" placeholder="Enter product price">
+      <br><span th:if="${#fields.hasErrors('price')}" th:errors="*{price}" style="color:red"></span>
+    </p>
+    <p>
+      Category:
+      <select th:field="*{category}">
+        <option th:each="category : ${categories}" th:value="${category}" th:text="${category.categoryName}"></option>
+      </select>
+      <br><span th:if="${#fields.hasErrors('category')}" th:errors="*{category}" style="color:red"></span>
+    </p>
 
-  <p>
-    Product Image: <input type="file" name="uploadedimage" />
-    <br><span th:if="${#fields.hasErrors('image')}" th:errors="*{image}" style="color:red"></span>
-  </p>
-  <p><input type="submit" value="Add Product"></p>
-</form>
+    <p>
+      Product Image: <input type="file" name="uploadedimage" />
+      <br><span th:if="${#fields.hasErrors('image')}" th:errors="*{image}" style="color:red"></span>
+    </p>
+    <p><input type="submit" value="Add Product"></p>
+  </form>
 
 
-<table>
-  <thead>
-  <tr>
-    <th>Product Name</th>
-    <th>Price</th>
-    <th>Category</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr th:each="product : ${products}">
-    <td th:text="${product.name}"></td>
-    <td th:text="${product.price}"></td>
-    <td th:text="${product.category}"></td>
-  </tr>
-  </tbody>
-</table>
-
+  <table>
+    <thead>
+    <tr>
+      <th>Product Name</th>
+      <th>Price</th>
+      <th>Category</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="product : ${products}">
+      <td th:text="${product.name}"></td>
+      <td th:text="${product.price}"></td>
+      <td th:text="${product.category}"></td>
+    </tr>
+    </tbody>
+  </table>
+</div>
 
 </body>
 </html>

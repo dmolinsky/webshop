@@ -10,33 +10,36 @@
 <!-- Header -->
 <div th:replace="fragments/header :: header"></div>
 
-<table>
-  <thead>
-  <tr>
-    <th>Order ID</th>
-    <th>User</th>
-    <th>Status</th>
-    <th>Update Status</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr th:each="order : ${orders}">
-    <td th:text="${order.id}"></td>
-    <td th:text="${order.user.username}"></td>
-    <td th:text="${order.status}"></td>
+<div class="admin-orders-container">
+  <h2>Administrate orders</h2>
+  <table>
+    <thead>
+    <tr>
+      <th>Order ID</th>
+      <th>User</th>
+      <th>Status</th>
+      <th>Update Status</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="order : ${orders}">
+      <td th:text="${order.id}"></td>
+      <td th:text="${order.user.username}"></td>
+      <td th:text="${order.status}"></td>
 
-    <td>
-      <form th:action="@{/admin-update-order}" method="post">
-        <input type="hidden" th:name="orderId" th:value="${order.id}" />
-        <select th:name="status">
-          <option th:each="status : ${orderStatuses}" th:value="${status}" th:text="${status}"></option>
-        </select>
-        <button type="submit">Update</button>
-      </form>
-    </td>
-  </tr>
-  </tbody>
-</table>
+      <td>
+        <form th:action="@{/admin-update-order}" method="post">
+          <input type="hidden" th:name="orderId" th:value="${order.id}" />
+          <select th:name="status">
+            <option th:each="status : ${orderStatuses}" th:value="${status}" th:text="${status}"></option>
+          </select>
+          <button type="submit">Update</button>
+        </form>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
 
 </body>
 </html>
