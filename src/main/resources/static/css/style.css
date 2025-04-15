@@ -1,0 +1,131 @@
+:root {
+    --light-green: #dff5dc;
+    --dark-green: #2e4a32;
+    --white: #ffffff;
+    --gray: #888888;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: var(--white);
+    color: var(--dark-green);
+}
+
+.site-header {
+    background: linear-gradient(to right, var(--dark-green), #365f3c);
+    padding: 1rem 2rem;
+    border-bottom: none;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.logo a {
+    text-decoration: none;
+    font-size: 1.5rem;
+    color: var(--white);
+    font-weight: bold;
+}
+
+.menu-toggle {
+    display: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--white);
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 1.5rem;
+    position: relative;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: var(--white);
+    font-weight: 500;
+    transition: color 0.3s, background-color 0.3s;
+    padding: 0.3rem 0.6rem;
+    border-radius: 5px;
+}
+
+.nav-links a:hover {
+    background-color: var(--light-green);
+    color: var(--dark-green);
+}
+
+.dropdown {
+    position: relative;
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    background-color: var(--dark-green);
+    top: 100%;
+    left: 0;
+    min-width: 160px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    border-radius: 5px;
+    padding: 0.5rem 0;
+}
+
+.dropdown-menu li {
+    display: block;
+    padding: 0;
+}
+
+.dropdown-menu li a {
+    display: block;
+    padding: 0.5rem 1rem;
+    color: var(--white);
+}
+
+.dropdown-menu li a:hover {
+    background-color: var(--light-green);
+    color: var(--dark-green);
+}
+
+.dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+@media (max-width: 768px) {
+    .menu-toggle {
+        display: block;
+    }
+
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        background-color: var(--dark-green);
+        padding: 1rem;
+        margin-top: 2rem;
+    }
+
+    .nav-links.active {
+        display: flex;
+    }
+
+    .navbar {
+        align-items: flex-start;
+    }
+
+    .dropdown-menu {
+        position: static;
+        box-shadow: none;
+    }
+}

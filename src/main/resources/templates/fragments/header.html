@@ -1,16 +1,23 @@
 <div th:fragment="header">
-    <header>
-        <nav>
-            <ul>
+    <header class="site-header">
+        <nav class="navbar">
+            <div class="logo">
+                <a href="/index">🌿 GREEN SHOP</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle">☰</div>
+            <ul class="nav-links" id="nav-links">
                 <li><a href="/index">Home</a></li>
 
-                <li th:if="${user != null and user.role == 'ADMIN'}"><a href="/admin-orders">Admin orders</a></li>
-                <li th:if="${user != null and user.role == 'ADMIN'}"><a href="/admin-products">Admin products</a></li>
+                <li th:if="${user != null and user.role == 'ADMIN'}" class="dropdown">
+                    <a href="#">Admin ▾</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/admin-orders">Orders</a></li>
+                        <li><a href="/admin-products">Products</a></li>
+                    </ul>
+                </li>
 
                 <li th:if="${user != null}"><a href="/cart">Shopping Cart</a></li>
-
                 <li th:if="${user != null}"><a href="/logout">Logout</a></li>
-
                 <li th:if="${user == null}"><a href="/login">Login</a></li>
             </ul>
         </nav>

@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Start</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <script src="/js/script.js"></script>
 </head>
 <body>
 <!-- Header -->
@@ -35,7 +37,7 @@
         <h2>Result:</h2>
 
         <div th:each="product : ${products}">
-            <p th:text="${product.name}"></p>
+            <a th:href="@{/product/{id}(id=${product.id})}" th:text="${product.name}"></a>
 
             <img th:if="${product.base64Image != null}" th:src="'data:image/jpeg;base64,' + ${product.base64Image}" alt="Product Image" width="200" height="200"/>
 
