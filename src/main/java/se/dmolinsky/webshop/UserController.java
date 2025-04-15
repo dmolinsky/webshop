@@ -41,14 +41,14 @@ public class UserController {
 
     @PostMapping("/login")
     public String loginUser(@Valid @ModelAttribute LoginForm form, BindingResult bindingResult, Model model, HttpSession session) {
-
         if (bindingResult.hasErrors()) {
             String messages = "";
             for (FieldError fieldError : bindingResult.getFieldErrors()) {
                 messages += fieldError.getDefaultMessage() + "*";
             }
             model.addAttribute("errormessage", messages);
-            return "login";
+            System.out.println(messages);
+            return "redirect:/login";
         }
 
         Optional<User> user = userService.getByUsername(form.getUsername());
@@ -59,7 +59,6 @@ public class UserController {
 
             return "redirect:/index";
         } else {
-            System.out.println(form.getPassword());
             model.addAttribute("error", "Invalid username or password");
             return "login";
         }
@@ -82,12 +81,18 @@ public class UserController {
     @PostMapping("/register")
     String registerUser(Model model, @Valid @ModelAttribute("registerForm") User user, BindingResult bindingResult, HttpSession session) {
 
+        if (userService.usernameExists(user.getUsername())) {
+            model.addAttribute("errormessage", "Username is already in use");
+            return "register";
+        }
+
         if (bindingResult.hasErrors()) {
-            model.addAttribute("user", null);
             String messages = "";
             for (FieldError fieldError : bindingResult.getFieldErrors()) {
                 messages += fieldError.getDefaultMessage() +"*";
             }
+            model.addAttribute("user", new User());
+
             model.addAttribute("errormessage", messages);
             return "register";
 
@@ -99,15 +104,15 @@ public class UserController {
             session.setAttribute("user", user);
             orderController.createOrder(session, user);
 
-            return "index";
+            return "redirect:/index";
         }
-
     }
 
     @GetMapping("/logout")
-    public String logout(HttpSession session) {
+    public String logout(HttpSession session, Model model) {
         session.invalidate();
-        return "redirect:/login";
+        model.addAttribute("loginForm", new LoginForm());
+        return "login";
     }
 
 

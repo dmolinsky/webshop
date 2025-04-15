@@ -12,6 +12,7 @@ public class User {
 
     @NotBlank(message="Username cannot be blank")
     @Size(min=5,max=25, message="Username has to be min 5 and max 25 letters.")
+    @Column(unique = true)
     private String username;
 
     @NotBlank(message = "Email cannot be blank")

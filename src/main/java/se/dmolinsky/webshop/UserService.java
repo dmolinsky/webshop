@@ -36,4 +36,8 @@ public class UserService {
         return BCrypt.checkpw(password, hashedPassword);
     }
 
+    public boolean usernameExists(String username) {
+        return repository.findByUsername(username).isPresent();
+    }
+
 }
