@@ -10,43 +10,45 @@
 <!-- Header -->
 <div th:replace="fragments/header :: header"></div>
 
-<h1>Shopping cart:</h1>
-<table>
-    <thead>
-    <tr>
-        <th>Product Name</th>
-        <th>Price</th>
-        <th>Quantity</th>
-        <th>Total Price</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="orderLine : ${orderLines}">
-        <td th:text="${orderLine.product.name}"></td>
-        <td th:text="${orderLine.product.price}"></td>
-        <td th:text="${orderLine.quantity}"></td>
-        <td th:text="${orderLine.getPrice()}"></td>
-        <td>
-            <form th:action="@{/update-product-quantity}" method="post">
-                <input type="number" th:name="quantity" th:value="${orderLine.quantity}" min="1" />
-                <input type="hidden" th:name="productId" th:value="${orderLine.product.id}" />
-                <button type="submit">Update Quantity</button>
-            </form>
-        </td>
-        <td>
-            <form th:action="@{/remove-product-from-cart}" method="post">
-                <button type="submit" th:name="productId" th:value="${orderLine.product.id}">Remove</button>
-            </form>
-        </td>
+<div class="cart-container">
+    <h1>Shopping cart:</h1>
+    <p></p>
+    <table>
+        <thead>
+        <tr>
+            <th>Product Name</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Total Price</th>
+            <th></th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="orderLine : ${orderLines}">
+            <td th:text="${orderLine.product.name}"></td>
+            <td th:text="${orderLine.product.price}"></td>
+            <td th:text="${orderLine.quantity}"></td>
+            <td th:text="${orderLine.getPrice()}"></td>
+            <td class="buttons" colspan="2">
+                <form th:action="@{/update-product-quantity}" method="post">
+                    <input type="number" th:name="quantity" th:value="${orderLine.quantity}" min="1" />
+                    <input type="hidden" th:name="productId" th:value="${orderLine.product.id}" />
+                    <button type="submit">Update</button>
+                </form>
+                <form th:action="@{/remove-product-from-cart}" method="post">
+                    <input type="hidden" th:name="productId" th:value="${orderLine.product.id}" />
+                    <button type="submit">Remove</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <form class="place-order" th:action="@{/checkout}" method="post" th:if="${orderLines != null and #lists.size(orderLines) > 0}">
+        <button type="submit">Place Order</button>
+    </form>
 
-    </tr>
-    </tbody>
-</table>
-
-<form th:action="@{/checkout}" method="post" th:if="${orderLines != null and #lists.size(orderLines) > 0}">
-    <button type="submit">Place Order</button>
-</form>
-
+</div>
 
 </body>
 </html>

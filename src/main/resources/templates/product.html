@@ -10,24 +10,27 @@
 <!-- Header -->
 <div th:replace="fragments/header :: header"></div>
 
-<div th:if="${product != null}">
+<div class="product-page-container" th:if="${product != null}">
 
     <h2 th:text="${product.name}">Product Name</h2>
 
-    <p><strong>Category:</strong> <span th:text="${product.category}">Category</span></p>
+    <div class="product-details">
+        <p><strong>Category:</strong> <span th:text="${product.category}">Category</span></p>
+        <p><strong>Price:</strong> $<span th:text="${product.price}">Price</span></p>
+    </div>
 
-    <p><strong>Price:</strong> $<span th:text="${product.price}">Price</span></p>
-
-    <img th:if="${product.base64Image != null}" th:src="'data:image/jpeg;base64,' + ${product.base64Image}" alt="Product Image" />
+    <img class="product-image" th:if="${product.base64Image != null}" th:src="'data:image/jpeg;base64,' + ${product.base64Image}" alt="Product Image" />
     <p th:if="${product.image == null}">No image available</p>
 
-    <form th:action="@{/add-to-cart}" th:method="post">
-        <input type="hidden" th:name="productId" th:value="${product.id}" />
-        <label>Quantity:</label>
-        <input type="number" th:name="quantity" min="1" value="1" />
-        <input type="hidden" th:name="redirectTo" th:value="'product'" />
-        <button type="submit">Add to Cart</button>
-    </form>
+    <div class="product-form-row">
+        <form class="product-form" th:action="@{/add-to-cart}" th:method="post">
+            <input type="hidden" th:name="productId" th:value="${product.id}" />
+            <label>Quantity:</label>
+            <input type="number" th:name="quantity" min="1" value="1" />
+            <input type="hidden" th:name="redirectTo" th:value="'product'" />
+            <button type="submit">Add to Cart</button>
+        </form>
+    </div>
 
 </div>
 
@@ -35,6 +38,6 @@
     <p>Product not found!</p>
 </div>
 
-<p><a href="/products">Back to Products</a></p>
+<p class="back-link"><a href="/index">Back to start</a></p>
 </body>
 </html>
