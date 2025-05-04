@@ -1,7 +1,14 @@
-package se.dmolinsky.webshop;
+package se.dmolinsky.webshop.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import se.dmolinsky.webshop.model.Order;
+import se.dmolinsky.webshop.model.OrderLine;
+import se.dmolinsky.webshop.model.OrderStatus;
+import se.dmolinsky.webshop.model.User;
+import se.dmolinsky.webshop.repository.OrderLineRepository;
+import se.dmolinsky.webshop.repository.OrderRepository;
+import se.dmolinsky.webshop.repository.ProductRepository;
 
 import java.util.List;
 import java.util.Optional;

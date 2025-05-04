@@ -1,4 +1,4 @@
-package se.dmolinsky.webshop;
+package se.dmolinsky.webshop.model;
 
 public class SearchCriteria {
     private String name;

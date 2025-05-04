@@ -1,4 +1,4 @@
-package se.dmolinsky.webshop;
+package se.dmolinsky.webshop.model;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;

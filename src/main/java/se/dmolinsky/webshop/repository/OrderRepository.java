@@ -1,8 +1,10 @@
-package se.dmolinsky.webshop;
+package se.dmolinsky.webshop.repository;
 
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+import se.dmolinsky.webshop.model.Order;
+import se.dmolinsky.webshop.model.OrderStatus;
 
 import java.util.List;
 import java.util.Optional;

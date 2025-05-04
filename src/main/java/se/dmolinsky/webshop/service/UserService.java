@@ -1,8 +1,11 @@
-package se.dmolinsky.webshop;
+package se.dmolinsky.webshop.service;
 
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import se.dmolinsky.webshop.model.User;
+import se.dmolinsky.webshop.repository.UserRepository;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -12,11 +15,11 @@ public class UserService {
     @Autowired
     UserRepository repository;
 
-    void add(User user) {
+    public void add(User user) {
         repository.save(user);
     }
 
-    List<User> getAll() {
+    public List<User> getAll() {
         return repository.findAll();
     }
 

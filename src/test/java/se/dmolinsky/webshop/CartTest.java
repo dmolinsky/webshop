@@ -5,6 +5,11 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
+import se.dmolinsky.webshop.model.Category;
+import se.dmolinsky.webshop.model.Order;
+import se.dmolinsky.webshop.model.OrderLine;
+import se.dmolinsky.webshop.model.Product;
+
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;

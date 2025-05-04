@@ -1,4 +1,4 @@
-package se.dmolinsky.webshop;
+package se.dmolinsky.webshop.controller;
 
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -10,7 +10,11 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import se.dmolinsky.webshop.service.OrderService;
+import se.dmolinsky.webshop.service.UserService;
+import se.dmolinsky.webshop.model.LoginForm;
+import se.dmolinsky.webshop.model.SessionData;
+import se.dmolinsky.webshop.model.User;
 
 import java.util.Optional;
 
@@ -18,16 +22,16 @@ import java.util.Optional;
 public class UserController {
 
     @Autowired
-    private UserService userService;
+    public UserService userService;
 
     @Autowired
-    private OrderController orderController;
+    public OrderController orderController;
 
     @Autowired
-    private OrderService orderService;
+    public OrderService orderService;
 
     @Autowired
-    private SessionData sessionData;
+    public SessionData sessionData;
 
     @GetMapping("/login")
     String loginPage(Model model) {

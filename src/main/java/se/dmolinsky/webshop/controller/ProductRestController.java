@@ -1,8 +1,11 @@
-package se.dmolinsky.webshop;
+package se.dmolinsky.webshop.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import se.dmolinsky.webshop.service.ProductService;
+import se.dmolinsky.webshop.model.Category;
+import se.dmolinsky.webshop.model.Product;
 
 import java.util.List;
 import java.util.Optional;

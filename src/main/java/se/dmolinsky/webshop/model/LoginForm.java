@@ -1,4 +1,4 @@
-package se.dmolinsky.webshop;
+package se.dmolinsky.webshop.model;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;

@@ -1,4 +1,4 @@
-package se.dmolinsky.webshop;
+package se.dmolinsky.webshop.model;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;

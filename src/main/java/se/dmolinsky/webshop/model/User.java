@@ -1,4 +1,4 @@
-package se.dmolinsky.webshop;
+package se.dmolinsky.webshop.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;

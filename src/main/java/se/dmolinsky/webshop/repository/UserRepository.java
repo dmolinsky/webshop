@@ -1,6 +1,7 @@
-package se.dmolinsky.webshop;
+package se.dmolinsky.webshop.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import se.dmolinsky.webshop.model.User;
 
 import java.util.Optional;
 

@@ -1,9 +1,11 @@
-package se.dmolinsky.webshop;
+package se.dmolinsky.webshop.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import se.dmolinsky.webshop.model.Category;
+import se.dmolinsky.webshop.model.Product;
+import se.dmolinsky.webshop.repository.ProductRepository;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
