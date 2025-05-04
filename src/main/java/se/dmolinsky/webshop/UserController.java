@@ -26,37 +26,33 @@ public class UserController {
     @Autowired
     private OrderService orderService;
 
-    @GetMapping("/login")
-    String loginPage(Model model, HttpSession session) {
+    @Autowired
+    private SessionData sessionData;
 
-        User user = (User) session.getAttribute("user");
-        if (user != null) {
+    @GetMapping("/login")
+    String loginPage(Model model) {
+        if (sessionData.getUser() != null) {
             return "redirect:/index";
         }
-        model.addAttribute("user", user);
-
         model.addAttribute("loginForm", new LoginForm());
         return "login";
     }
 
     @PostMapping("/login")
-    public String loginUser(@Valid @ModelAttribute LoginForm form, BindingResult bindingResult, Model model, HttpSession session) {
+    public String loginUser(@Valid @ModelAttribute LoginForm form, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             String messages = "";
             for (FieldError fieldError : bindingResult.getFieldErrors()) {
                 messages += fieldError.getDefaultMessage() + "*";
             }
             model.addAttribute("errormessage", messages);
-            System.out.println(messages);
-            return "redirect:/login";
+            return "login";
         }
 
         Optional<User> user = userService.getByUsername(form.getUsername());
         if (user.isPresent() && userService.checkPassword(form.getPassword(), user.get().getPassword())) {
-            session.setAttribute("user", user.get());
-
-            orderController.createOrder(session, user.get());
-
+            sessionData.setUser(user.get());
+            sessionData.setOrder(orderService.createOrder(user.get()));
             return "redirect:/index";
         } else {
             model.addAttribute("error", "Invalid username or password");
@@ -65,21 +61,16 @@ public class UserController {
     }
 
     @GetMapping("/register")
-    String registerUserPage(Model model, HttpSession session) {
-
-        User sessionUser = (User) session.getAttribute("user");
-        if (sessionUser != null) {
+    String registerUserPage(Model model) {
+        if (sessionData.getUser() != null) {
             return "redirect:/logout";
         }
-        model.addAttribute("user", sessionUser);
-
         model.addAttribute("registerForm", new User());
-
         return "register";
     }
 
     @PostMapping("/register")
-    String registerUser(Model model, @Valid @ModelAttribute("registerForm") User user, BindingResult bindingResult, HttpSession session) {
+    String registerUser(Model model, @Valid @ModelAttribute("registerForm") User user, BindingResult bindingResult) {
 
         if (userService.usernameExists(user.getUsername())) {
             model.addAttribute("errormessage", "Username is already in use");
@@ -89,30 +80,26 @@ public class UserController {
         if (bindingResult.hasErrors()) {
             String messages = "";
             for (FieldError fieldError : bindingResult.getFieldErrors()) {
-                messages += fieldError.getDefaultMessage() +"*";
+                messages += fieldError.getDefaultMessage() + "*";
             }
-            model.addAttribute("user", new User());
-
             model.addAttribute("errormessage", messages);
             return "register";
-
-        } else {
-            String hashedPassword = userService.hashPassword(user.getPassword());
-            user.setPassword(hashedPassword);
-            user.setRole("USER");
-            userService.add(user);
-            session.setAttribute("user", user);
-            orderController.createOrder(session, user);
-
-            return "redirect:/index";
         }
+
+        String hashedPassword = userService.hashPassword(user.getPassword());
+        user.setPassword(hashedPassword);
+        user.setRole("USER");
+        userService.add(user);
+        sessionData.setUser(user);
+        sessionData.setOrder(orderService.createOrder(user));
+
+        return "redirect:/index";
     }
 
     @GetMapping("/logout")
-    public String logout(HttpSession session, Model model) {
+    public String logout(HttpSession session) {
         session.invalidate();
-        model.addAttribute("loginForm", new LoginForm());
-        return "login";
+        return "redirect:/login";
     }
 
 

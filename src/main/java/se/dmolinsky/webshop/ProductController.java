@@ -18,16 +18,17 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
+    @Autowired
+    private SessionData sessionData;
+
     @GetMapping("/product/{id}")
-    public String showProductPage(@PathVariable("id") Long id, HttpSession session, Model model) {
-        User user = (User) session.getAttribute("user");
+    public String showProductPage(@PathVariable("id") Long id, Model model) {
+        User user = sessionData.getUser();
         if (user == null) {
             return "redirect:/login";
         }
-        model.addAttribute("user", user);
 
         Optional<Product> product = productService.getProductById(id);
-
         if (product.isPresent()) {
             Product p = product.get();
             if (p.getImage() != null) {
@@ -40,19 +41,15 @@ public class ProductController {
         return "product";
     }
 
-
     @GetMapping("/admin-products")
-    public String showAdminPage(HttpSession session, Model model) {
-        User user = (User) session.getAttribute("user");
-
+    public String showAdminPage(Model model) {
+        User user = sessionData.getUser();
         if (user == null) {
             return "redirect:/login";
         }
-        if (!user.getRole().equals("ADMIN")) {
+        if (!"ADMIN".equals(user.getRole())) {
             return "redirect:/index";
         }
-        model.addAttribute("user", user);
-
 
         model.addAttribute("product", new Product());
         model.addAttribute("categories", Category.values());
@@ -68,8 +65,6 @@ public class ProductController {
                              @RequestParam("uploadedimage") MultipartFile imageFile) {
 
         if (result.hasErrors()) {
-            result.getAllErrors().forEach(error -> System.out.println("Error: " + error.getDefaultMessage()));
-
             return "admin-products";
         }
 

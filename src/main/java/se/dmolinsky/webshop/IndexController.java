@@ -18,14 +18,15 @@ public class IndexController {
     @Autowired
     private ProductService productService;
 
-    @GetMapping("/index")
-    public String indexPage(HttpSession session, Model model) {
-        User user = (User) session.getAttribute("user");
+    @Autowired
+    private SessionData sessionData;
 
-        if (session.getAttribute("user") == null) {
+    @GetMapping("/index")
+    public String indexPage(Model model) {
+        User user = sessionData.getUser();
+        if (user == null) {
             return "redirect:/login";
         }
-        model.addAttribute("user", user);
 
         model.addAttribute("categories", Category.values());
         model.addAttribute("searchCriteria", new SearchCriteria());
@@ -37,18 +38,16 @@ public class IndexController {
     }
 
     @PostMapping("/index")
-    public String searchProducts(@ModelAttribute SearchCriteria searchCriteria, HttpSession session, Model model) {
-        User user = (User) session.getAttribute("user");
-
-        if (session.getAttribute("user") == null) {
+    public String searchProducts(@ModelAttribute SearchCriteria searchCriteria, Model model) {
+        User user = sessionData.getUser();
+        if (user == null) {
             return "redirect:/login";
         }
-        model.addAttribute("user", user);
 
-        model.addAttribute("products", new ArrayList<Product>());
-
-        Optional<List<Product>> foundProducts = productService.searchProducts(searchCriteria.getName(), searchCriteria.getCategory());
-
+        Optional<List<Product>> foundProducts = productService.searchProducts(
+                searchCriteria.getName(),
+                searchCriteria.getCategory()
+        );
 
         if (foundProducts.isPresent()) {
             model.addAttribute("products", foundProducts.get());
@@ -58,8 +57,7 @@ public class IndexController {
         }
 
         model.addAttribute("categories", Category.values());
-
-        model.addAttribute("searchCriteria", searchCriteria); //Reset values in inputfields
+        model.addAttribute("searchCriteria", searchCriteria);
 
         return "index";
     }
