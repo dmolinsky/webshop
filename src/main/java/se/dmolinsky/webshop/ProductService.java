@@ -13,8 +13,8 @@ public class ProductService {
     @Autowired
     private ProductRepository productRepository;
 
-    public void addProduct(Product product) {
-        productRepository.save(product);
+    public Product addProduct(Product product) {
+        return productRepository.save(product);
     }
 
     public Optional<Product> getProductById(Long id) {
@@ -44,4 +44,7 @@ public class ProductService {
         return productRepository.findAll();
     }
 
+    public void deleteProduct(Long id) {
+        productRepository.deleteById(id);
+    }
 }
